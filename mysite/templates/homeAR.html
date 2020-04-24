@@ -1,0 +1,309 @@
+<html>
+  <head>
+    {% extends 'base.html' %}
+    
+    
+
+    
+  </head>
+  <body>
+    {% block content %}
+      <nav class=" navbar navbar-inverse  navbar-expand-lg navbar-light  py-3 "  style="  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.15)" ><h1 class="m-auto" style="text-align: center;">حالات الكورونا في السودان</h1> 
+        <div><a  href="{% url 'home' %}" style="color: white;" ><i class="fa fa-language" style="color: white;"></i>-EN</a></div>
+      </nav>
+      <br/>
+      <div class="row">
+      <div class="col-lg-12 ">
+        <div class="col-lg-11 m-auto">
+          <div class="d-lg-none mb-3">
+            <div class="card m-auto d-flex flex-column p-3">
+              <div class="card card-tasks " >
+                <div class="card-header  text-right">
+                  <h4 class="title d-inline"  >   عددالاصابات في كل اسبوع من الشهر الحالي   </h4>
+                </div>
+                <div class="chart-area  "style=" height: 150%;">
+                  <canvas id="week_chart"  data-url="{% url 'week_chart' %}"></canvas>
+                </div>
+              </div>
+              <div>use Desktop version to more detail</div>
+            </div>
+          </div>
+          <div class="card card-chart d-lg-flex d-none">
+            <div class="card-header ">
+              <div class="row">
+                <div class="col-sm-12 text-right ">
+                  <h2 class="card-title"> معدل الاصابات اليومي</h2>
+                
+                </div>
+                <div class="col-sm-6">
+                  <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body  col-lg-12 offset-md-1" style="width: 80%; margin-top:-15%;">
+            
+                <div class="col-lg-12 offset-lg-1 chart-area" >
+                  
+                    <canvas id="daily_chart" data-url="{% url 'daily_chart' %}"></canvas>
+                </div>
+
+              
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class=" col-lg-6 "  style="padding-bottom: 10px;">
+          <div class=" col-lg-12 m-auto">
+            <div class="card card-tasks " >
+              <div class="card-header text-right ">
+                <h4 class="title d-inline"> عدد الاصابات في الشهر</h4>
+              </div>
+              <div class="chart-area  "style=" height: 150%;">
+                <canvas id="manths_chart"  data-url="{% url 'manths_chart' %}"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class=" col-lg-6  ">
+          <div class="col-lg-12 "  style=" color: aliceblue !important; ">
+            <div class="card card-tasks " class=" m-auto">
+              <div class="card-header text-right">
+                <h4 class="title d-inline"> معدل الحالات</h4>
+              </div>
+              <div class="chart-area " style=" height: 150%; ">
+                
+                  <canvas id="avreg_chart"  data-url="{% url 'avreg_chart' %}"></canvas>
+                  
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+
+
+      
+
+    
+
+
+    <footer class="footer ">
+      
+      
+        <div class=" d-flex flex-row align-items-center     ">
+          &copy; <a href="mailto: fatimhalbshir@gmail.com">FTM - </a>   statistics of corona In Sudan | 2020
+        </div>
+      
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+
+      $(function () {
+
+        var $daily_chart = $("#daily_chart");
+        $.ajax({
+          url: $daily_chart.data("url"),
+          success: function (data) {
+
+            var ctx = $daily_chart[0].getContext("2d");
+
+            new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: data.labels1,
+                datasets: [{
+                  label: 'عدد الاصابات اليومي',
+                  backgroundColor: 'rgba(255,0,0,0.5)',
+                  borderColor: 'red',
+                  borderWidth: 2,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  pointBackgroundColor: 'red',
+                  pointBorderColor: 'rgba(255,255,255,0)',
+                  pointHoverBackgroundColor: 'red',
+                  pointBorderWidth: 20,
+                  pointHoverRadius: 4,
+                  pointHoverBorderWidth: 15,
+                  pointRadius: 4,
+                  data: data.data1
+                }]          
+              },
+              options: {
+                responsive: true,
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'Corona'
+                }
+              }
+            });
+
+          }
+        });
+
+      });
+
+
+  $(function () {
+
+      var $avreg_chart = $("#avreg_chart");
+      $.ajax({
+        url: $avreg_chart.data("url"),
+        success: function (data) {
+
+          var ctx = $avreg_chart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: data.labels2,
+              datasets: [{
+                label: 'معدل الحالات',
+                backgroundColor:[   '#e60000','orangered', '#00ff00'],
+                borderColor: '#525f7f',
+                borderWidth: 2,
+                borderDash: [],
+                borderDashOffset: 0.0,
+                pointBackgroundColor: 'red',
+                pointBorderColor: '#6c757d',
+                pointHoverBackgroundColor: '#6c757d',
+                pointBorderWidth: 20,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 15,
+                pointRadius: 4,
+                data: data.data2
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Corona'
+              }
+            }
+          });
+
+        }
+      });
+
+  });
+
+
+    $(function () {
+
+      var $manths_chart = $("#manths_chart");
+      $.ajax({
+        url: $manths_chart.data("url"),
+        success: function (data) {
+        
+          var ctx = $manths_chart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            responsive: true,
+            legend: {
+              display: false
+            },
+            data: {
+              labels: data.labels3 ,
+              datasets: [{
+                label: ' معدل الاصابات في الشهر',
+                backgroundColor:'rgba(255,0,0,0.5) ',
+                borderColor: 'red',
+                borderWidth: 2,
+                borderDash: [],
+                borderDashOffset: 0.0,
+                pointBackgroundColor: 'red',
+                pointBorderColor: 'rgba(255,255,255,0)',
+                pointHoverBackgroundColor: 'red',
+                pointBorderWidth: 20,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 15,
+                pointRadius: 4,
+                data: data.data3
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Corona'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+$(function () {
+
+var $week_chart = $("#week_chart");
+$.ajax({
+  url: $week_chart.data("url"),
+  success: function (data) {
+
+    var ctx = $week_chart[0].getContext("2d");
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: data.labels4,
+        datasets: [{
+          label: 'عدد الاصابات في الاسبوع',
+          backgroundColor: 'rgba(255,0,0,0.5)',
+          borderColor: 'red',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: 'red',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: 'red',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: data.data4
+        }]          
+      },
+      options: {
+        responsive: true,
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Corona'
+        }
+      }
+    });
+
+  }
+});
+
+});
+
+
+  </script>
+
+    
+
+    
+    
+  {% endblock content %}
+
+</html>

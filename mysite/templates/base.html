@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+{% load static %}
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png"          href="{% static 'assets/img/favicon.png'    %}">
+    <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="{% static 'assets/css/black-dashboard.css' %}" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{% static 'assets/demo/demo.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+
+    <script src="{% static 'assets/js/plugins/chartjs.min.js' %}"></script>
+    
+    <!--  Notifications Plugin    -->
+    <script src="{% static 'assets/js/plugins/bootstrap-notify.js' %}"></script>
+    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{% static 'assets/js/black-dashboard.min.js' %}"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+    <script src="{% static 'assets/demo/demo.js' %}"></script>
+    <script src="{% static 'assets/demo/demo.js' %}"></script>
+    <link href="{% static 'assets/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+  
+  
+  <title>CoronaVirus in sudan</title>
+</head>
+<body>
+  <nav>
+    <div > <a href="{% url 'home' %}" style="color: #525f7f;">If not load press her</a> </div>
+  </nav>
+  
+  
+  <div class="wrapper">
+    
+
+    
+
+    {% block content %}
+      
+      {% include 'home.html' %}
+      
+    {% endblock content %}
+    
+
+      
+  </div>
+  
+  
+
+
+
+</body>
+ 
+  
+</html>
